@@ -1,28 +1,41 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Header/>
+    <main-container :personaggi="personaggi"/>
+
+    
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
+import MainContainer from './components/MainContainer.vue'
+import Header from './components/Header.vue'
+import axios from 'axios'
+
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+  MainContainer,
+  Header,
+},
+
+data() {
+  return {
+    personaggi:[]
   }
+},
+
+
+mounted() {
+  axios.get('https://api.sampleapis.com/rickandmorty/characters').then((response)=> {
+    this.personaggi=response.data;
+  })
+ }
 }
 </script>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+@import './style/main.scss';
 </style>
